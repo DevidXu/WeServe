@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid black;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.Content {
+    width: 100%;
+    height: 90%;
+}
+
+.BottomTag {
+    height: 10%;
+}
+.BottomTag li {
+    height: 100%;
+    width: 25%;
+}
+.BottomTag li a {
+    height: 100%;
+    text-align: center;
+    padding-top: 16px;
+    font-size: 24px;
+    font-family: Consolas, monaco, monospace;
+    cursor: pointer;
+    border-radius: 0px !important;
+}
