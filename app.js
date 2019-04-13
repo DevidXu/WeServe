@@ -16,7 +16,6 @@ app.use(express.static(__dirname));
 
 
 const DB = require('./server/database');
-const CN = require('./server/Connections');
 
 /* register your backend service here */
 app.get('/sampleTest', (req, res) => {
@@ -64,8 +63,32 @@ app.get('/takeMission', (req, res) => {
 app.get('/completeMission', (req, res) => {
     const { missionId, username } = req.query;
     DB.cCompleteMission(missionId, username, res);
-})
+});
 
+app.get('/events/:id', (req, eventRes) => {
+    let username = req.params.id;
+    eventRes.writeHead(200, {
+        Connection: "keep-alive",
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*"
+    });
+
+    let sourceURL = "/events/" + username;
+    console.log("Event user is coming in with event source: " + sourceURL);
+    DB.userData[sourceURL] = eventRes;
+    console.log(`Event source for ${username}: ${sourceURL}`);
+
+    const checkItv = setInterval(function() {
+        const timeCheck = { event: "timeCheck", data: new Date().toLocaleTimeString('en-US') };
+        eventRes.write("data: " + JSON.stringify(timeCheck) + '\n\n');
+    }, 10000);
+
+    req.on("close", function () {
+        clearInterval(checkItv);
+        delete DB.userData[sourceURL];
+    });
+});
 
 
 app.use('/', (req, res) => {
@@ -74,5 +97,3 @@ app.use('/', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-module.exports = app;

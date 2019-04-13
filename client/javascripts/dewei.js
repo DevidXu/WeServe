@@ -1,5 +1,3 @@
-
-
 /*
 * To avoid function rename, please write functions starting with your first letter
 * */
@@ -7,28 +5,6 @@ function dGetAppName(scope, ...args) {
     return scope.appName;
 }
 
-function dLogin(scope) {
-    let username = scope.username;
-    let password = scope.password;
-
-    scope.http({
-        method: 'GET',
-        url: '/login',
-        params: {
-            username: username,
-            password: password
-        }
-    }).then((data, status) => {
-        scope.isLogin = true;
-        scope.personInfo = data.data;
-        console.log("Login successfully");
-        dGetLevelImage(scope, scope.personInfo.level);
-        getMissionDoneInfo(scope, scope.personInfo.missionDone);
-        getMissionIssuedInfo(scope, scope.personInfo.missionIssued);
-        getMissionOngoingInfo(scope, scope.personInfo.missionOngoing);
-        getNewMissionList(scope);
-    });
-}
 
 function dGetLevelImage(scope, level) {
     if (!level) return;

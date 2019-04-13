@@ -12,15 +12,18 @@ const userInfo = dbc.model('userInfo', userInfoSchema, 'userinfo');
 const missions = dbc.model('missions', missionsSchema, 'missions');
 const messages = dbc.model('messages', messageSchema, 'messages');
 
+const CN = require('./Connections');
+let userData = {};
 
 function dGetPersonalInfo(username, password, response) {
     let personInfo = {};
     console.log("Get personal info: "+username);
     userInfo.find({ username: username, password: password}).then(results => {
         if (results.length === 0) return;
-        console.log("Get personal info");
+        console.log("User " + username + " login the system successfully");
         personInfo = results[0];
         let userId = personInfo._id;
+        CN.setupConnection(username, userId);
         missions.find({doneBy: username, status: 2}).then(res => {
             personInfo.missionDone = res;
             missions.find({ issuer: username }).then(res => {
@@ -71,15 +74,32 @@ function cTakeMission(missionId, username, response) {
     console.log(username);
     missions.update({ _id: missionId }, { status: 1, doneBy: username }).then(results => {
         response.send("Success");
+        messageFriend(username, "missionTaken", "true");
     });
 }
 
 function cCompleteMission(missionId, username, response) {
     missions.update({ _id: missionId }, { status: 2 }).then(results => {
         response.send("Success");
+        messageFriend(username, "missionCompleted", "true");
     })
 }
 
+function messageFriend(username, event, data) {
+    const sourceURL = "/events/"+username;
+    console.log(userData);
+    if (!userData.hasOwnProperty(sourceURL)) return false;
+    let str = JSON.stringify({
+        event: event,
+        data: data,
+    });
+    console.log(sourceURL);
+    console.log(userData[sourceURL]);
+    userData[sourceURL].write(`data: ${str}\n\n`);
+    userData[sourceURL].flush();
+
+    return true;
+}
 
 module.exports = {
     dGetPersonalInfo: dGetPersonalInfo,
@@ -87,5 +107,6 @@ module.exports = {
     sIssueMission: sIssueMission,
     cGetNewMission: cGetNewMission,
     cTakeMission: cTakeMission,
-    cCompleteMission: cCompleteMission
+    cCompleteMission: cCompleteMission,
+    userData: userData
 };

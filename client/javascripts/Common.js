@@ -28,6 +28,8 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
         friends: {}
     };
 
+    $scope.eventSource = null;
+
     // dewei specialized
     $scope.dLogin = dLogin;
     $scope.dGetLevelImage = dGetLevelImage;
@@ -90,6 +92,49 @@ function sendSample(scope, ...args) {
         console.log("Return info:" + JSON.parse(data.data.info));
     });
 }
+
+
+function updatePersonInfo(scope) {
+    dGetLevelImage(scope, scope.personInfo.level);
+    getMissionDoneInfo(scope, scope.personInfo.missionDone);
+    getMissionIssuedInfo(scope, scope.personInfo.missionIssued);
+    getMissionOngoingInfo(scope, scope.personInfo.missionOngoing);
+    getNewMissionList(scope);
+}
+
+const serverURL = "http://localhost:3000";
+function dLogin(scope) {
+    let username = scope.username;
+    let password = scope.password;
+
+    scope.http({
+        method: 'GET',
+        url: '/login',
+        params: {
+            username: username,
+            password: password
+        }
+    }).then((data, status) => {
+        scope.personInfo = data.data;
+        if (!scope.isLogin) {
+            scope.isLogin = true;
+            var eventSourceInitDict = {headers: {'Content-Type': 'application/json'}};
+            scope.eventSource = new EventSource(serverURL + '/events/' + scope.personInfo.username, eventSourceInitDict);
+            scope.eventSource.onmessage = (message) => {
+                console.log(message);
+                const data = JSON.parse(message.data);
+                if (data.event === "missionTaken" || data.event === "missionCompleted") {
+                    dLogin(scope);
+                }
+            }
+        }
+        scope.isLogin = true;
+        console.log("Login successfully");
+        updatePersonInfo(scope);
+    });
+}
+
+
 
 
 function getSubstr(scope, str, begin, num) {
