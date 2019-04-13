@@ -51,6 +51,23 @@ app.get('/issueMission', (req, res) => {
     DB.sIssueMission(mission, res);
 })
 
+app.get('/getNewMission', (req, res) => {
+    const personInfo = JSON.parse(req.query.personInfo);
+    DB.cGetNewMission(personInfo, res);
+})
+
+app.get('/takeMission', (req, res) => {
+    const { missionId, username } = req.query;
+    DB.cTakeMission(missionId, username, res);
+});
+
+app.get('/completeMission', (req, res) => {
+    const { missionId, username } = req.query;
+    DB.cCompleteMission(missionId, username, res);
+})
+
+
+
 app.use('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.sendFile(__dirname+"/index.html");

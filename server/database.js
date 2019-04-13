@@ -55,8 +55,37 @@ function sIssueMission(mission, response) {
     });
 }
 
+function cGetNewMission(personInfo, response) {
+    missions.find({
+        status: 0,
+        level: {$lt: personInfo.level },
+        issuer: {$ne: personInfo.username } ,
+        tags: { $in: personInfo.tags }
+    }).then(results => {
+        response.send(JSON.stringify(results));
+    });
+}
+
+function cTakeMission(missionId, username, response) {
+    console.log(missionId);
+    console.log(username);
+    missions.update({ _id: missionId }, { status: 1, doneBy: username }).then(results => {
+        response.send("Success");
+    });
+}
+
+function cCompleteMission(missionId, username, response) {
+    missions.update({ _id: missionId }, { status: 2 }).then(results => {
+        response.send("Success");
+    })
+}
+
+
 module.exports = {
     dGetPersonalInfo: dGetPersonalInfo,
     dGetMissionInfo: dGetMissionInfo,
     sIssueMission: sIssueMission,
+    cGetNewMission: cGetNewMission,
+    cTakeMission: cTakeMission,
+    cCompleteMission: cCompleteMission
 };

@@ -70,11 +70,12 @@
 .card {
     width: 300px;
     display: inline-block;
-    margin: 10px 10px 10px 10px;
+    margin: 10px 20px 10px 20px;
     box-shadow: 5px 5px 10px #aea8a8;
 }
 .card-body {
     padding: 0.8rem;
+    height: 270px;
 }
 .Mission {
 }
@@ -101,7 +102,7 @@
     font-weight: bolder;
     font-family: inherit;
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px #000000;
     color: orangered;
@@ -120,4 +121,22 @@
     text-align: center;
     vertical-align: middle;
     margin-top: 200px;
+}
+.MissionChoice {
+    margin-top: 6px;
+}
+.MissionAccept {
+    width: 100%;
+    height: 27px;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.MissionTalk {
+    background-color: #e69e8f;
+    color: black;
+    border: none !important;
+    font-weight: bold;
+}
+.MissionIssueBy {
+    font-size: 16px;
 }

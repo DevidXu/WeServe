@@ -35,8 +35,12 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.missionDoneList = [];
     $scope.missionIssuedList = [];
     $scope.missionOngoingList = [];
+    $scope.newMissionList = []
+    $scope.levelImages = [];
     $scope.getSubstr = getSubstr;
     $scope.showMissionIssued = showMissionIssued;
+    $scope.TakeMission = TakeMission;
+    $scope.CompleteMission = CompleteMission;
 
     // Shawnny specified
     $scope.resendOrNot = false;
@@ -94,4 +98,32 @@ function getSubstr(scope, str, begin, num) {
 
 function showMissionIssued(scope, mission) {
     let result = mission.issuer !== scope.personInfo._id && mission.status != 2;
+}
+
+
+function TakeMission(scope, missionId, takerName) {
+    console.log(takerName);
+    scope.http({
+        method: 'GET',
+        url: '/takeMission',
+        params: {
+            missionId: missionId,
+            username: takerName,
+        }
+    }).then((data, status) => {
+        console.log("Mission is marked as taken");
+    })
+}
+
+function CompleteMission(scope, missionId, username) {
+    scope.http({
+        method: 'GET',
+        url: '/completeMission',
+        params: {
+            missionId: missionId,
+            username: username,
+        }
+    }).then((data, status) => {
+        console.log("Mission is marked as completed");
+    })
 }

@@ -22,9 +22,11 @@ function dLogin(scope) {
         scope.isLogin = true;
         scope.personInfo = data.data;
         console.log("Login successfully");
+        dGetLevelImage(scope, scope.personInfo.level);
         getMissionDoneInfo(scope, scope.personInfo.missionDone);
         getMissionIssuedInfo(scope, scope.personInfo.missionIssued);
         getMissionOngoingInfo(scope, scope.personInfo.missionOngoing);
+        getNewMissionList(scope);
     });
 }
 
@@ -44,7 +46,7 @@ function dGetLevelImage(scope, level) {
         images.push({id: id++, url: "/client/resources/levels/star.jpg"});
         level -= 1;
     }
-    return images;
+    scope.levelImages = images;
 }
 
 
@@ -93,6 +95,19 @@ function getMissionIssuedInfo(scope, idList) {
     }
 }
 
+
+function getNewMissionList(scope) {
+    scope.newMissionList = [];
+    scope.http({
+        method: 'GET',
+        url: '/getNewMission',
+        params: {
+            personInfo: JSON.stringify(scope.personInfo),
+        }
+    }).then((data, status) => {
+        scope.newMissionList = data.data;
+    })
+}
 
 function deweiTest(scope) {
     return scope;

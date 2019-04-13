@@ -89,7 +89,7 @@
                     <div class="col-sm-1 text-left">
                         <div class="Level" style="font-size: 24px; font-weight: bold; font-family: Consolas, monaco, monospace;">{{personInfo.level}}</div>
                     </div>
-                    <div class="col-sm-6 text-left" ng-init="levelImages = dGetLevelImage(this, personInfo.level);">
+                    <div class="col-sm-6 text-left">
                         <div ng-repeat="imageURL in levelImages" style="display: inline-block;">
                             <img src="{{imageURL.url}}" alt="Not Found" />
                         </div>
@@ -109,15 +109,15 @@
                                     <div style="width: 100%; font-size: 15px;">
                                         For: <div class="Tag" ng-repeat="tag in mission.tags">{{tag}}</div>
                                     </div>
-                                    <div style="width: 100%; font-size: 17px;">
+                                    <div style="width: 100%; font-size: 18px;">
                                         Reward: <div class="MissionReward">{{mission.reward}}</div>
                                     </div>
                                     <div style="width: 100%; font-size: 17px">
                                         Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
                                     </div>
-                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
-                                        Issued By: {{ mission.issuer }}
-                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    <div class="MissionIssueBy" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                        Issued By: <strong>{{ mission.issuer }}</strong>
+                                        <button class="btn btn-primary MissionTalk" style="float: right; margin-top: -5px; font-size: 13px;">Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                         <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -126,9 +126,11 @@
                                         <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
                                     </div>
 
-                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
-                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
-                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    <div class="row MissionChoice" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">Take Mission</button>
+                                    </div>
+                                    <div class="row MissionChoice" ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="CompleteMission($parent, mission._id, $parent.personInfo.username)">Confirm Completion</button>
                                     </div>
 
                                     <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
@@ -136,7 +138,7 @@
                                         <i class="material-icons" style="color: red; margin-left: 20px;">done_outline</i>
                                     </div>
                                 </div>
-                                <div class="card-footer" style="padding: 3px 0px 0px 12px">
+                                <div class="card-footer" style="padding: 0px 0px 0px 12px">
                                     <small class="text-muted">Created at: {{getSubstr(this, mission.created_at, 0, 16)}}</small>
                                 </div>
                             </div>
@@ -163,9 +165,9 @@
                                     <div style="width: 100%; font-size: 17px">
                                         Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
                                     </div>
-                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
-                                        Issued By: {{ mission.issuer }}
-                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    <div class="MissionIssueBy" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                        Issued By: <strong>{{ mission.issuer }}</strong>
+                                        <button class="btn btn-primary MissionTalk" style="float: right; margin-top: -5px; font-size: 13px;">Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                         <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -174,9 +176,11 @@
                                         <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
                                     </div>
 
-                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
-                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
-                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    <div class="row MissionChoice" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">Take Mission</button>
+                                    </div>
+                                    <div class="row MissionChoice" ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="CompleteMission($parent, mission._id, $parent.personInfo.username)">Confirm Completion</button>
                                     </div>
 
                                     <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
@@ -211,9 +215,9 @@
                                     <div style="width: 100%; font-size: 17px">
                                         Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
                                     </div>
-                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
-                                        Issued By: {{ mission.issuer }}
-                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    <div class="MissionIssueBy" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                        Issued By: <strong>{{ mission.issuer }}</strong>
+                                        <button class="btn btn-primary MissionTalk" style="float: right; margin-top: -5px; font-size: 13px;">Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                         <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -222,9 +226,11 @@
                                         <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
                                     </div>
 
-                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
-                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
-                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    <div class="row MissionChoice" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">Take Mission</button>
+                                    </div>
+                                    <div class="row MissionChoice" ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="CompleteMission($parent, mission._id, $parent.personInfo.username)">Confirm Completion</button>
                                     </div>
 
                                     <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
@@ -295,7 +301,52 @@
         </div>
 
         <div class="dMissionList" ng-show="webTag === 'MissionList'">
+            <div ng-show="!isLogin" class="NotLogin">
+                Please login at <strong>Personal Info</strong> Page first
+            </div>
+            <div ng-show="isLogin">
+                <div class="card" ng-repeat="mission in newMissionList" ng>
+                    <div class="card-body">
+                        <h5 class="card-title MissionTitle">{{mission.title}}</h5>
+                        <p class="card-text MissionDescription">{{mission.description}}</p>
 
+                        <div style="width: 100%; font-size: 15px;">
+                            For: <div class="Tag" ng-repeat="tag in mission.tags">{{tag}}</div>
+                        </div>
+                        <div style="width: 100%; font-size: 18px;">
+                            Reward: <div class="MissionReward">{{mission.reward}}</div>
+                        </div>
+                        <div style="width: 100%; font-size: 17px">
+                            Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
+                        </div>
+                        <div class="MissionIssueBy" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                            Issued By: <strong>{{ mission.issuer }}</strong>
+                            <button class="btn btn-primary MissionTalk" style="float: right; margin-top: -5px; font-size: 13px;">Take A Talk</button>
+                        </div>
+                        <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
+                            <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
+                                Currently accepted by <div class="MissionDoneBy" style="font-size: 22px;">{{mission.doneBy}}</div>
+                            </div>
+                            <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
+                        </div>
+
+                        <div class="row MissionChoice" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                            <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">Take Mission</button>
+                        </div>
+                        <div class="row MissionChoice" ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                            <button class="btn btn-primary MissionAccept" style="width: 100%" ng-click="CompleteMission($parent, mission._id, $parent.personInfo.username)">Confirm Completion</button>
+                        </div>
+
+                        <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
+                            Done By ME!
+                            <i class="material-icons" style="color: red; margin-left: 20px;">done_outline</i>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="padding: 0px 0px 0px 12px">
+                        <small class="text-muted">Created at: {{getSubstr(this, mission.created_at, 0, 16)}}</small>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
