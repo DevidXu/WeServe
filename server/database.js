@@ -76,13 +76,21 @@ function cTakeMission(missionId, username, response) {
         response.send("Success");
         messageFriend(username, "missionTaken", "true");
     });
+    missions.find({ _id: missionId }).then(results => {
+        let issuer = results[0].issuer;
+        messageFriend(issuer, "missionTaken", "true");
+    });
 }
 
 function cCompleteMission(missionId, username, response) {
     missions.update({ _id: missionId }, { status: 2 }).then(results => {
         response.send("Success");
         messageFriend(username, "missionCompleted", "true");
-    })
+    });
+    missions.find({ _id: missionId }).then(results => {
+        let issuer = results[0].issuer;
+        messageFriend(issuer, "missionCompleted", "true");
+    });
 }
 
 
@@ -111,8 +119,8 @@ function dGetMessageList(personInfo, response) {
 }
 
 function dSendMessage(username, targetName, text, response) {
-    messages.insertMany([{ user1: username, user2: targetName, text: text }]).then({
-
+    messages.insertMany([{ user1: username, user2: targetName, text: text }]).then(results => {
+        response.send("Success");
     });
 }
 

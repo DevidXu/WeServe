@@ -104,6 +104,7 @@ function updatePersonInfo(scope) {
 }
 
 const serverURL = "http://localhost:3000";
+
 function dLogin(scope) {
     let username = scope.username;
     let password = scope.password;
@@ -128,6 +129,7 @@ function dLogin(scope) {
                     dLogin(scope);
                 }
             }
+            getMessageList(scope);
         }
         scope.isLogin = true;
         console.log("Login successfully");

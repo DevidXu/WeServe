@@ -89,7 +89,7 @@ function getNewMissionList(scope) {
 function getMessageList(scope) {
     scope.friends = [];
     scope.http({
-        method: '/GET',
+        method: 'GET',
         url: '/getMessageList',
         params: {
             personInfo: JSON.stringify(scope.personInfo),
