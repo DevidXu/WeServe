@@ -9,6 +9,26 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.sendSample = sendSample;
 
     $scope.webTag = 'MissionList';
+
+    // dewei added
+    $scope.isLogin = false;
+    $scope.username = "";
+    $scope.password = "";
+    $scope.personInfo = {
+        username: "david",
+        password: "123",
+        avatar: "/client/resources/test.jpg",
+        tags: ["C++", "driver", "traveller"],
+        level: 34,
+        mark: 12390,
+        missionOngoing: [0, 1, 2, 3],
+        missionDone: [4, 5, 6, 7],
+        friends: {}
+    };
+
+    // dewei specialized
+    $scope.dLogin = dLogin;
+    $scope.dGetLevelImage = dGetLevelImage;
 }]);
 
 /*
@@ -53,4 +73,16 @@ function sendSample(scope, ...args) {
     }).then((data, status) => {
         console.log("Return info:" + JSON.parse(data.data.info));
     });
+}
+
+function getMissionInfo(missionId) {
+    return {
+      id: 0,
+      issuer: 12,
+      title: 'take a pizza',
+      description: 'I am in lvl library. Pay for someone who can brought a pizza for me',
+      rewards: 20,
+      status: 0,
+      doneBy: [1, 2, 4]
+    };
 }

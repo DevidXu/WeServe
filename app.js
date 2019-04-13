@@ -15,10 +15,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
 
 
+const DB = require('./server/database');
+const CN = require('./server/Connections');
+
 /* register your backend service here */
 app.get('/sampleTest', (req, res) => {
     res.send(JSON.stringify({ info: "true" }));
-})
+});
+
+app.get('/login', (req, res) => {
+    return;
+});
 
 
 app.use('/', (req, res) => {

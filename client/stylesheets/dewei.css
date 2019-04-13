@@ -1,3 +1,21 @@
 .dTestCss {
 
 }
+.dInfoList {
+
+}
+.dPersonalInfo {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+.dBorderRow {
+    border: 1px solid black;
+    margin-bottom: 0px !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.dRowMark {
+    font-size: 20px;
+    font-family: Consolas, monaco, monospace;
+}

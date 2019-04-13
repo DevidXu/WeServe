@@ -30,8 +30,106 @@
 <body ng-app="app" ng-controller="userCtrl">
 <div class="container">
     <div class="Content">
-    </div>
 
+        <div class="dPersonalInfo" ng-show="webTag === 'PersonalInfo'">
+            <div ng-show="!isLogin">
+                <div class="form-group row" style="height: 100px;"></div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-3">Username</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm" ng-model="username"
+                               placeholder="Please input your username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 offset-sm-3">Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control input-sm" ng-model="password"
+                               placeholder="Please input your username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary" style="float: right; margin-right: 50px; width: 200px;" ng-click="dLogin(this)">Sign In</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" class="btn btn-primary" style="float: left; margin-left: 50px; width: 200px;">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="dInfoList" ng-show="isLogin">
+                <div class="form-group row dBorderRow">
+                    <div class="col-sm-4 text-center dRowMark">
+                        UserName:
+                    </div>
+                    <div class="col-sm-4 text-left" style="font-size: 30px; font-family: Consolas, monaco, monospace;">
+                        {{ personInfo.username }}
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow" style="height: 80px;">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Avatar
+                    </div>
+                    <div class="col-sm-4 text-left" style="height: 100%">
+                        <img src="{{personInfo.avatar}}" alt="Null Avatar" height="100%" />
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Personal Tags:
+                    </div>
+                    <div class="col-sm-8 text-left">
+                        <div class="Tag" ng-repeat="tag in personInfo.tags" style="display: inline-block;">{{tag}}</div>
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Level:
+                    </div>
+                    <div class="col-sm-1 text-left">
+                        <div class="Level" style="font-size: 24px; font-weight: bold; font-family: Consolas, monaco, monospace;">{{personInfo.level}}</div>
+                    </div>
+                    <div class="col-sm-6 text-left" ng-init="levelImages = dGetLevelImage(this, personInfo.level);">
+                        <div ng-repeat="imageURL in levelImages" style="display: inline-block;">
+                            <img src="{{imageURL.url}}" alt="Not Found" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow" style="">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Missions Issued:
+                    </div>
+                    <div class="col-sm-8 text-left dRowMark">
+                        <div class="Mission">
+                            <div class="MissionTitle">Take pizza for me</div>
+                            <div class="MissionDesc">I am currently staying in lvl library and waiting for someone who can bring a piece of pizza for me.</div>
+                            <div class="MissionTaker">David, Jack, Nancy</div>
+                            <div class="MissionReward">50</div>
+                            <div class="MissionTime">2019/04/12</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow" style="">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Missions Going:
+                    </div>
+                    <div class="col-sm-8 text-left dRowMark">
+                        <div class="Mission"></div>
+                    </div>
+                </div>
+                <div class="form-group row dBorderRow" style="">
+                    <div class="col-sm-4 text-center dRowMark">
+                        Missions History:
+                    </div>
+                    <div class="col-sm-8 text-left dRowMark">
+                        <div class="Mission"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
     <ul class="nav nav-pills BottomTag">
         <li class="nav-item">

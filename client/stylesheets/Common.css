@@ -1,6 +1,4 @@
 .container {
-    display: flex;
-    flex-direction: column;
     height: 100%;
     border: 1px solid black;
     padding-left: 0px;
@@ -8,8 +6,30 @@
 }
 
 .Content {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
     width: 100%;
     height: 90%;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .BottomTag {
@@ -27,4 +47,33 @@
     font-family: Consolas, monaco, monospace;
     cursor: pointer;
     border-radius: 0px !important;
+    background-color: lightgrey;
+}
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.Tag {
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid lightgreen;
+    background-color: lemonchiffon;
+    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
+    box-shadow: 2px 1px 8px 1px #888888;
+    font-weight: bold;
+    font-family: Consolas, monaco, monospace;
+}
+.Mission {
+    height: 300px;
+    width: 250px;
+    border-radius: 25px;
+    background-color: #dce6e4;
+    border: 1px solid lightgreen;
+}
+.MissionTitle {
+    font-size: 18px;
+    margin-top: 2px;
+    text-align: center;
 }
