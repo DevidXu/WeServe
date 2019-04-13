@@ -2,12 +2,12 @@ const selectSQL = (sql) => {
     // to be determined
 }
 
+selectMG = null;
+insertMG = null;
+updateMG = null;
 
 module.exports = {
     selectMG: selectMG,
-    selectSQL: selectSQL,
     insertMG: insertMG,
-    insertSQL: insertSQL,
-    updateMG: updateMG,
-    updateSQL: updateSQL
+    updateMG: updateMG
 };

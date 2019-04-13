@@ -67,10 +67,6 @@
 }
 .Mission {
     height: 300px;
-    width: 250px;
-    border-radius: 25px;
-    background-color: #dce6e4;
-    border: 1px solid lightgreen;
 }
 .MissionTitle {
     font-size: 18px;
