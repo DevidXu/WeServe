@@ -24,9 +24,32 @@ app.get('/sampleTest', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    return;
+    let username = req.query.username;
+    let password = req.query.password;
+    DB.dGetPersonalInfo(username, password, res);
 });
 
+app.get('/getMissionInfo', (req, res) => {
+    let missionId = req.query.missionId;
+    DB.dGetMissionInfo(missionId, res);
+})
+
+app.get('/issueMission', (req, res) => {
+    const { issuer,title,description, tags, status, reward, level, location,doneBy } = req.query;
+    const mission = {
+        issuer: issuer,
+        title: title,
+        description: description,
+        tags: tags,
+        status: status,
+        reward: reward,
+        level: level,
+        location: location,
+        doneBy: doneBy
+    };
+    console.log(mission);
+    DB.sIssueMission(mission, res);
+})
 
 app.use('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html');

@@ -59,17 +59,65 @@
     padding-right: 10px;
     border: 1px solid lightgreen;
     background-color: lemonchiffon;
-    margin: 10px 10px 10px 10px;
+    margin: 5px 5px 5px 5px;
     border-radius: 10px;
     box-shadow: 2px 1px 8px 1px #888888;
     font-weight: bold;
     font-family: Consolas, monaco, monospace;
+    font-size: 16px;
+    display: inline-block;
+}
+.card {
+    width: 300px;
+    display: inline-block;
+    margin: 10px 10px 10px 10px;
+    box-shadow: 5px 5px 10px #aea8a8;
+}
+.card-body {
+    padding: 0.8rem;
 }
 .Mission {
-    height: 300px;
 }
 .MissionTitle {
-    font-size: 18px;
-    margin-top: 2px;
+    font-size: 17px;
     text-align: center;
+    height: 20px;
+    text-shadow: 1px 1px 8px #191111;
+}
+.MissionDescription {
+    font-size: 13px;
+    height: 80px;
+    margin-bottom: 0px;
+    border: 1px solid darkgray;
+    padding: 2px 5px 2px 5px;
+}
+.MissionDoneBy {
+    font-size: 20px;
+    display: inline-block;
+    color: cornflowerblue;
+}
+.MissionReward {
+    display: inline-block;
+    font-weight: bolder;
+    font-family: inherit;
+    margin-left: 10px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px #000000;
+    color: orangered;
+}
+.MissionLevel {
+    display: inline-block;
+    font-weight: bold;
+    margin-left: 10px;
+    font-size: 18px;
+}
+.MissionDoneByMe {
+
+}
+.NotLogin {
+    font-size: 50px;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 200px;
 }

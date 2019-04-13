@@ -15,20 +15,32 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.username = "";
     $scope.password = "";
     $scope.personInfo = {
+        id: "w0923md23",
         username: "david",
         password: "123",
         avatar: "/client/resources/test.jpg",
         tags: ["C++", "driver", "traveller"],
         level: 34,
-        mark: 12390,
+        mark: 3000,
         missionOngoing: [0, 1, 2, 3],
         missionDone: [4, 5, 6, 7],
+        missionIssued: [1,2,4,5],
         friends: {}
     };
 
     // dewei specialized
     $scope.dLogin = dLogin;
     $scope.dGetLevelImage = dGetLevelImage;
+    $scope.deweiTest  = deweiTest;
+    $scope.missionDoneList = [];
+    $scope.missionIssuedList = [];
+    $scope.missionOngoingList = [];
+    $scope.getSubstr = getSubstr;
+    $scope.showMissionIssued = showMissionIssued;
+
+    // Shawnny specified
+    $scope.resendOrNot = false;
+    $scope.sIssue = sIssue;
 }]);
 
 /*
@@ -75,14 +87,11 @@ function sendSample(scope, ...args) {
     });
 }
 
-function getMissionInfo(missionId) {
-    return {
-      id: 0,
-      issuer: 12,
-      title: 'take a pizza',
-      description: 'I am in lvl library. Pay for someone who can brought a pizza for me',
-      rewards: 20,
-      status: 0,
-      doneBy: [1, 2, 4]
-    };
+
+function getSubstr(scope, str, begin, num) {
+    return str.substr(begin, num);
+}
+
+function showMissionIssued(scope, mission) {
+    let result = mission.issuer !== scope.personInfo._id && mission.status != 2;
 }

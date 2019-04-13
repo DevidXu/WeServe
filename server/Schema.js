@@ -24,7 +24,7 @@ const messageSchema = new Schema({
 exports.messageSchema = messageSchema;
 
 const missionSchema = new Schema({
-    "issuer": {type: ObjectId, index: true, required: true},
+    "issuer": {type: String, index: true, required: true},
     "title": {type: String, index: true, required: true},
     "description": {type: String},
     "tags": [String],
@@ -33,6 +33,6 @@ const missionSchema = new Schema({
     "reward": Number,
     "level": Number,
     "location": String,
-    "doneBy": ObjectId,
+    "doneBy": String,
 });
 exports.missionSchema = missionSchema;

@@ -31,7 +31,7 @@
 <div class="container">
     <div class="Content">
 
-        <div class="dPersonalInfo" ng-show="webTag === 'PersonalInfo'">
+        <div class="dPersonalInfo" ng-show="webTag === 'PersonalInfo'" ng-init="dGetPersonalInfo(this, username)">
             <div ng-show="!isLogin">
                 <div class="form-group row" style="height: 100px;"></div>
                 <div class="form-group row">
@@ -59,23 +59,23 @@
             </div>
             <div class="dInfoList" ng-show="isLogin">
                 <div class="form-group row dBorderRow">
-                    <div class="col-sm-4 text-center dRowMark">
+                    <div class="col-sm-3 text-center dRowMark">
                         UserName:
                     </div>
-                    <div class="col-sm-4 text-left" style="font-size: 30px; font-family: Consolas, monaco, monospace;">
+                    <div class="col-sm-3 text-left" style="font-size: 30px; font-family: Consolas, monaco, monospace;">
                         {{ personInfo.username }}
                     </div>
                 </div>
                 <div class="form-group row dBorderRow" style="height: 80px;">
-                    <div class="col-sm-4 text-center dRowMark">
+                    <div class="col-sm-3 text-center dRowMark">
                         Avatar
                     </div>
-                    <div class="col-sm-4 text-left" style="height: 100%">
+                    <div class="col-sm-3 text-left" style="height: 100%">
                         <img src="{{personInfo.avatar}}" alt="Null Avatar" height="100%" />
                     </div>
                 </div>
                 <div class="form-group row dBorderRow">
-                    <div class="col-sm-4 text-center dRowMark">
+                    <div class="col-sm-3 text-center dRowMark">
                         Personal Tags:
                     </div>
                     <div class="col-sm-8 text-left">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="form-group row dBorderRow">
-                    <div class="col-sm-4 text-center dRowMark">
+                    <div class="col-sm-3 text-center dRowMark">
                         Level:
                     </div>
                     <div class="col-sm-1 text-left">
@@ -96,41 +96,207 @@
                     </div>
                 </div>
                 <div class="form-group row dBorderRow" style="">
-                    <div class="col-sm-4 text-center dRowMark">
+                    <div class="col-sm-3 text-center dRowMark">
                         Missions Issued:
                     </div>
                     <div class="col-sm-8 text-left dRowMark">
-                        <div class="Mission card" style="width: 18rem;">
-                            <div class="card-header">Get me a pizza</div>
-                            <div class="card-body">
-                                I am currently staying in lvl library and waiting for someone who can bring a piece of pizza for me.
+                        <div class="Mission">
+                            <div class="card" ng-repeat="mission in missionIssuedList">
+                                <div class="card-body">
+                                    <h5 class="card-title MissionTitle">{{mission.title}}</h5>
+                                    <p class="card-text MissionDescription">{{mission.description}}</p>
+
+                                    <div style="width: 100%; font-size: 15px;">
+                                        For: <div class="Tag" ng-repeat="tag in mission.tags">{{tag}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px;">
+                                        Reward: <div class="MissionReward">{{mission.reward}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px">
+                                        Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
+                                    </div>
+                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        Issued By: {{ mission.issuer }}
+                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    </div>
+                                    <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
+                                        <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
+                                            Currently accepted by <div class="MissionDoneBy" style="font-size: 22px;">{{mission.doneBy}}</div>
+                                        </div>
+                                        <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
+                                    </div>
+
+                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
+                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    </div>
+
+                                    <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
+                                        Done By ME!
+                                        <i class="material-icons" style="color: red; margin-left: 20px;">done_outline</i>
+                                    </div>
+                                </div>
+                                <div class="card-footer" style="padding: 3px 0px 0px 12px">
+                                    <small class="text-muted">Created at: {{getSubstr(this, mission.created_at, 0, 16)}}</small>
+                                </div>
                             </div>
-                            <div class="MissionTaker">David, Jack, Nancy</div>
-                            <div class="MissionReward">50</div>
-                            <div class="MissionTime">2019/04/12</div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row dBorderRow" style="">
-                    <div class="col-sm-4 text-center dRowMark">
-                        Missions Going:
+                    <div class="col-sm-3 text-center dRowMark">
+                        Missions Ongoing:
                     </div>
                     <div class="col-sm-8 text-left dRowMark">
-                        <div class="Mission"></div>
+                        <div class="Mission">
+                            <div class="card" ng-repeat="mission in missionOngoingList">
+                                <div class="card-body">
+                                    <h5 class="card-title MissionTitle">{{mission.title}}</h5>
+                                    <p class="card-text MissionDescription">{{mission.description}}</p>
+
+                                    <div style="width: 100%; font-size: 15px;">
+                                        For: <div class="Tag" ng-repeat="tag in mission.tags">{{tag}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px;">
+                                        Reward: <div class="MissionReward">{{mission.reward}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px">
+                                        Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
+                                    </div>
+                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        Issued By: {{ mission.issuer }}
+                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    </div>
+                                    <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
+                                        <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
+                                            Currently accepted by <div class="MissionDoneBy" style="font-size: 22px;">{{mission.doneBy}}</div>
+                                        </div>
+                                        <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
+                                    </div>
+
+                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
+                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    </div>
+
+                                    <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
+                                        Done By ME!
+                                        <i class="material-icons" style="color: red; margin-left: 20px;">done_outline</i>
+                                    </div>
+                                </div>
+                                <div class="card-footer" style="padding: 3px 0px 0px 12px">
+                                    <small class="text-muted">Created at: {{getSubstr(this, mission.created_at, 0, 16)}}</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group row dBorderRow" style="">
-                    <div class="col-sm-4 text-center dRowMark">
-                        Missions History:
+                    <div class="col-sm-3 text-center dRowMark">
+                        Mission Done:
                     </div>
                     <div class="col-sm-8 text-left dRowMark">
-                        <div class="Mission"></div>
+                        <div class="Mission">
+                            <div class="card" ng-repeat="mission in missionDoneList">
+                                <div class="card-body">
+                                    <h5 class="card-title MissionTitle">{{mission.title}}</h5>
+                                    <p class="card-text MissionDescription">{{mission.description}}</p>
+
+                                    <div style="width: 100%; font-size: 15px;">
+                                        For: <div class="Tag" ng-repeat="tag in mission.tags">{{tag}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px;">
+                                        Reward: <div class="MissionReward">{{mission.reward}}</div>
+                                    </div>
+                                    <div style="width: 100%; font-size: 17px">
+                                        Level Require: <div class="MissionLevel">{{mission.level>0? mission.level+'+': 'NONE'}}</div>
+                                    </div>
+                                    <div ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1">
+                                        Issued By: {{ mission.issuer }}
+                                        <button class="btn btn-primary" style="float: right; margin-top: -5px; font-size: 13px;">Talk</button>
+                                    </div>
+                                    <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
+                                        <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
+                                            Currently accepted by <div class="MissionDoneBy" style="font-size: 22px;">{{mission.doneBy}}</div>
+                                        </div>
+                                        <div ng-show="mission.doneBy===''" style="font-size: 18px;">Not accepted by anyone yet</div>
+                                    </div>
+
+                                    <div class="row" ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0">
+                                        <div class="col-sm-6"><button class="btn btn-primary" style="float: left; margin-left: 12px; width: 80px">Accept</button></div>
+                                        <div class="col-sm-6"><button class="btn btn-secondary" style="float: right; margin-right: 12px; width: 80px;">Chat</button></div>
+                                    </div>
+
+                                    <div class="row MissionDoneByMe" ng-show="mission.doneBy == $parent.personInfo.username && mission.status == 2">
+                                        Done By ME!
+                                        <i class="material-icons" style="color: red; margin-left: 20px;">done_outline</i>
+                                    </div>
+                                </div>
+                                <div class="card-footer" style="padding: 3px 0px 0px 12px">
+                                    <small class="text-muted">Created at: {{getSubstr(this, mission.created_at, 0, 16)}}</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="dIssueMission" ng-show="webTag === 'IssueMission'">
+            <div ng-show="!isLogin" class="NotLogin">
+                Please login at <strong>Personal Info</strong> Page first
+            </div>
+            <div ng-show="isLogin && resentOrNot">
+                Congratulations! You have successfully issued a new mission.
+                You can check your new mission in <strong><a href="#" ng-click="webTag='PersonalInfo'">Personal Info</a></strong>
+                Or you can re-issue another task <strong><a href="#" ng-click="resentOrNot=false">Here</a></strong>!
+            </div>
+            <form ng-show="isLogin && !resentOrNot">
+                <div class="form-group">
+                    <label id = "stitleLabel" for="stitleName">Title Name:</label>
+                    <input type="text" class="form-control" id="stitleName" placeholder="Enter a title name for this event" ng-model="ngEventTitle">
+                </div>
+                <div class="form-group form-group-lg">
+                    <label id="sdescriptionLabel" for="stitleDescription">Description:</label>
+                    <textarea class="form-control form-control-lg" type="text" rows="8" id="stitleDescription" placeholder="Explain your needs in detail" ng-model="ngEventDescription"></textarea>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <label id = "sdistanceLabel" for="sdistance">Distance:</label>
+                        <input type="text" class="form-control col-md-4" id = "sdistance" placeholder="Distance in miles" ng-model="ngDistance">
+                    </div>
+                    <div class="col-md-4">
+                        <label id="srewardLabel" for="sreward">Reward:</label>
+                        <input type="text" class="form-control col-md-4" id="sreward" placeholder="Reward amount" ng-model="ngReward">
+                    </div>
+                    <div class="col-md-4">
+                        <label id="slevelLabel" for="slevel">Level Requirement:</label>
+                        <input type="text" class="form-control" id="slevel" placeholder="Your minimum level requirement" ng-model="ngLevel">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="stags" rows="4">
+                        <p id="schooseTags">Choose your tag:</p>
+                        <label class="stags"><input type="checkbox" ng-model="ngDriver">Driver</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngProgrammer">Programmer</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngDesigner">Designer</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngCook">Cook</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngPlumber">Plumber</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngTutor">Tutor</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngMath">Math</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngBooster">Booster</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngCourier">Courier</label>
+                        <label class="stags"><input type="checkbox" ng-model="ngCleaner">Cleaner</label>
+                    </div>
+                </div>
 
+                <button id="sIssueButton" type="submit" class="btn btn-primary" ng-click="sIssue(this)">Issue!</button>
+            </form>
+        </div>
+
+        <div class="dMissionList" ng-show="webTag === 'MissionList'">
+
+        </div>
     </div>
 
     <ul class="nav nav-pills BottomTag">
@@ -148,7 +314,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link nav-style" ng-class="{active: webTag === 'PersonalInfo' }"
-               ng-click="webTag='PersonalInfo'">Personal Info</a>
+               ng-click="webTag='PersonalInfo'; deweiTest(this);">Personal Info</a>
         </li>
     </ul>
 </div>

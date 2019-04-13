@@ -15,24 +15,18 @@ const messages = dbc.model('messages', messageSchema, 'messages');
 
 function dGetPersonalInfo(username, password, response) {
     let personInfo = {};
-    console.log("Get personal info"+username+password);
+    console.log("Get personal info: "+username);
     userInfo.find({ username: username, password: password}).then(results => {
         if (results.length === 0) return;
         console.log("Get personal info");
         personInfo = results[0];
         let userId = personInfo._id;
-        missions.find({doneBy: userId, status: 2}).then(res => {
+        missions.find({doneBy: username, status: 2}).then(res => {
             personInfo.missionDone = res;
-            missions.find({ issuer: userId }).then(res => {
+            missions.find({ issuer: username }).then(res => {
                 personInfo.missionIssued = res;
-                missions.find({ doneBy: userId, status: 1 }).then(res => {
+                missions.find({ doneBy: username, status: 1 }).then(res => {
                     personInfo.missionOngoing = res;
-
-                    console.log(personInfo);
-                    console.log(personInfo.missionDone);
-                    let info = JSON.stringify(personInfo);
-                    // console.log(info);
-
                     response.send(JSON.stringify(personInfo));
                     return;
                 })
@@ -41,25 +35,28 @@ function dGetPersonalInfo(username, password, response) {
     });
 }
 
-function getMissionDone(scope, userId) {
-    missions.find({ doneBy: userId, status: 1 }).then(res => {
-        scope.personInfo.missionDone = res;
+
+function dGetMissionInfo(missionId, response) {
+    let missionInfo = {};
+    missions.find({ _id: missionId }).then(results => {
+        if (results.length === 0) {
+            console.log("This mission doesn't exist");
+            return;
+        }
+        missionInfo = results[0];
+        response.send(JSON.stringify(missionInfo));
+    })
+}
+
+
+function sIssueMission(mission, response) {
+    missions.insertMany([mission]).then(results => {
+        response.send("Success");
     });
 }
 
-function getMissionIssue(scope, userId) {
-    missions.find({ issuer: userId }).then(res => {
-        scope.personInfo.missionIssued = res;
-    })
-}
-
-function getMissionOngoing(scope, userId) {
-    missions.find({ doneBy: userId, status: 0 }).then(res => {
-        scope.personInfo.missionOngoing = res;
-    })
-}
-
-
 module.exports = {
     dGetPersonalInfo: dGetPersonalInfo,
+    dGetMissionInfo: dGetMissionInfo,
+    sIssueMission: sIssueMission,
 };

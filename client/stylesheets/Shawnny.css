@@ -1,3 +1,37 @@
 .sTestCss {
 
 }
+
+.stags{
+	margin-left: 16px;
+}
+
+#stitleLabel{
+	color: rgb(245, 10, 0);
+	margin-left: 10px;
+}
+
+#sdescriptionLabel{
+	color: rgb(245, 10, 0);
+	margin-left: 10px;
+}
+
+#sdistanceLabel{
+	color: rgb(245, 10, 0);
+}
+
+#srewardLabel{
+	color: rgb(245, 10, 0);
+}
+
+#slevelLabel{
+	color: rgb(245, 10, 0);
+}
+
+#schooseTags{
+	color: rgb(245, 10, 0);
+}
+
+#sIssueButton{
+	margin-left: 10px;
+}
