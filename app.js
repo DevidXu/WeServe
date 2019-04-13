@@ -65,6 +65,16 @@ app.get('/completeMission', (req, res) => {
     DB.cCompleteMission(missionId, username, res);
 });
 
+app.get('/getMessageList', (req, res) => {
+    const { personInfo } = req.query;
+    DB.dGetMessageList(personInfo, res);
+});
+
+app.get('/sendMessage', (req, res) => {
+    const { username, targetName, text } = req.query;
+    DB.dSendMessage(username, targetName, text, res);
+});
+
 app.get('/events/:id', (req, eventRes) => {
     let username = req.params.id;
     eventRes.writeHead(200, {

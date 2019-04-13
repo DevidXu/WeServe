@@ -26,7 +26,7 @@ function dGetPersonalInfo(username, password, response) {
         CN.setupConnection(username, userId);
         missions.find({doneBy: username, status: 2}).then(res => {
             personInfo.missionDone = res;
-            missions.find({ issuer: username }).then(res => {
+            missions.find({ issuer: username, status: {$in : [0, 1]} }).then(res => {
                 personInfo.missionIssued = res;
                 missions.find({ doneBy: username, status: 1 }).then(res => {
                     personInfo.missionOngoing = res;
@@ -85,6 +85,38 @@ function cCompleteMission(missionId, username, response) {
     })
 }
 
+
+function dGetMessageList(personInfo, response) {
+    messages.find({ $or: [{ user1: personInfo.username }, {user2: personInfo.username}], $orderby: { created_at: -1 } }).then(results => {
+        let friends = {};
+        let keys = [];
+        for (let message of results ) {
+            let target = message.user1 === personInfo.username? message.user2: message.user1;
+            if (message.user1 === personInfo.username) {
+                if (!friends.hasOwnProperty(message.user2)) friends[message.user2] = [];
+                friends[message.user2].push({friendName: message.user2, message: { sent: message.user1, text: message.text } });
+            }
+            if (message.user2 === personInfo.username) {
+                if (!friends.hasOwnProperty(message.user1)) friends[message.user1] = [];
+                friends[message.user1].push({friendName: message.user1, message: { sent: message.user1, text: message.text } });
+            }
+            if (!keys.includes(target)) keys.push(target);
+        }
+        let sortedFriends = [];
+        for (let name of keys) {
+            sortedFriends.push(friends[name]);
+        }
+        response.send(JSON.stringify(sortedFriends));
+    });
+}
+
+function dSendMessage(username, targetName, text, response) {
+    messages.insertMany([{ user1: username, user2: targetName, text: text }]).then({
+
+    });
+}
+
+
 function messageFriend(username, event, data) {
     const sourceURL = "/events/"+username;
     console.log(userData);
@@ -108,5 +140,7 @@ module.exports = {
     cGetNewMission: cGetNewMission,
     cTakeMission: cTakeMission,
     cCompleteMission: cCompleteMission,
+    dGetMessageList: dGetMessageList,
+    dSendMessage: dSendMessage,
     userData: userData
 };

@@ -29,6 +29,7 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     };
 
     $scope.eventSource = null;
+    $scope.getTimeFromNow = getTimeFromNow;
 
     // dewei specialized
     $scope.dLogin = dLogin;
@@ -139,6 +140,25 @@ function dLogin(scope) {
 
 function getSubstr(scope, str, begin, num) {
     return str.substr(begin, num);
+}
+
+function getTimeFromNow(scope, timeStr) {
+    console.log(timeStr);
+    let now = new Date();
+    let issueDate = new Date(timeStr);
+    if (now - issueDate < 60000) {
+        return 'less than 1 mins ago';
+    }
+    if (now - issueDate < 3600000) {
+        return `${Math.floor((now - issueDate) / 60000)} mins ago`
+    }
+
+    if (now - issueDate < 86400000) {
+        return `${Math.floor((now - issueDate) / 3600000)} hour(s) ago`
+    }
+    else {
+        return `${Math.floor((now - issueDate) / 86400000)} days(s) ago`;
+    }
 }
 
 function showMissionIssued(scope, mission) {

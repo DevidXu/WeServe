@@ -85,6 +85,36 @@ function getNewMissionList(scope) {
     })
 }
 
+
+function getMessageList(scope) {
+    scope.friends = [];
+    scope.http({
+        method: '/GET',
+        url: '/getMessageList',
+        params: {
+            personInfo: JSON.stringify(scope.personInfo),
+        }
+    }).then((data, status) => {
+        scope.friends = data.data;
+    })
+}
+
+function sendMessage(scope, username, targetName, text) {
+    scope.friends = [];
+    scoep.http({
+        method: '/GET',
+        url: '/sendMessage',
+        params: {
+            username: username,
+            targetName: targetName,
+            text: text
+        }
+    }).then((data, status) => {
+       console.log("Message sent!");
+    });
+}
+
+
 function deweiTest(scope) {
     return scope;
 }
