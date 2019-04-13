@@ -16,8 +16,8 @@ const userInfoSchema = new Schema({
 exports.userInfoSchema = userInfoSchema;
 
 const messageSchema = new Schema({
-    "user_id1": {type: String, index: true, required: true} ,
-    "user_id2": {type: String, index: true, required: true},
+    "user1": {type: String, index: true, required: true} ,
+    "user2": {type: String, index: true, required: true},
     "text": String,
     "created_at": {type: Date, default: Date.now},
 });

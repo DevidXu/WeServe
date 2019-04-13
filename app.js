@@ -66,11 +66,12 @@ app.get('/completeMission', (req, res) => {
 });
 
 app.get('/getMessageList', (req, res) => {
-    const { personInfo } = req.query;
+    const personInfo = JSON.parse(req.query.personInfo);
     DB.dGetMessageList(personInfo, res);
 });
 
 app.get('/sendMessage', (req, res) => {
+    console.log("Here is send message");
     const { username, targetName, text } = req.query;
     DB.dSendMessage(username, targetName, text, res);
 });

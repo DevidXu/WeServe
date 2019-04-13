@@ -24,12 +24,20 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
         mark: 3000,
         missionOngoing: [0, 1, 2, 3],
         missionDone: [4, 5, 6, 7],
-        missionIssued: [1,2,4,5],
-        friends: {}
+        missionIssued: [1,2,4,5]
     };
+    $scope.friends = [
+        {friendName: "Josh", message: [
+                { sent: "Mason", text: "Hi you are great"},
+                { sent: "Josh", text: "I am fine and you" }
+            ]
+        },
+    ];
 
     $scope.eventSource = null;
     $scope.getTimeFromNow = getTimeFromNow;
+    $scope.sendMessage = sendMessage;
+    $scope.getMessageList = getMessageList;
 
     // dewei specialized
     $scope.dLogin = dLogin;
@@ -127,6 +135,9 @@ function dLogin(scope) {
                 const data = JSON.parse(message.data);
                 if (data.event === "missionTaken" || data.event === "missionCompleted") {
                     dLogin(scope);
+                }
+                if (data.event === "messageUpdate") {
+                    getMissageList(scope);
                 }
             }
             getMessageList(scope);

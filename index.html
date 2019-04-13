@@ -126,9 +126,9 @@
                                         <!--</div>-->
                                     </div>
 
-                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                         <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="sendMessage($parent, $parent.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');">
                                             <i class="material-icons">chat</i>Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -195,9 +195,9 @@
                                         <!--</div>-->
                                     </div>
 
-                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                         <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="sendMessage($parent, $parent.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');">
                                             <i class="material-icons">chat</i>Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -266,9 +266,9 @@
                                         <!--</div>-->
                                     </div>
 
-                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                    <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                         <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                        <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="sendMessage($parent, $parent.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');">
                                             <i class="material-icons">chat</i>Take A Talk</button>
                                     </div>
                                     <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -318,7 +318,7 @@
                 You can check your new mission in <strong><a href="#" ng-click="webTag='PersonalInfo'; dLogin(this);">Personal Info</a></strong><br/><br/>
                 Or you can re-issue another task <strong><a href="#" ng-click="resendOrNot=false; dLogin(this);">Here</a></strong>!
             </div>
-            <form ng-show="isLogin && !resendOrNot" style="width: 80%; margin: auto;">
+            <form ng-show="isLogin && !resendOrNot" style="width: 80%; margin: auto; margin-top: 20px;">
                 <div class="form-group row">
                     <label class="col-md-2" id = "stitleLabel" for="stitleName">Title Name:</label>
                     <input class="col-md-8" type="text" class="form-control" id="stitleName" placeholder="Enter a title name for this event" ng-model="ngEventTitle">
@@ -397,9 +397,9 @@
                                 </div>
                             </div>
 
-                            <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                            <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="sendMessage($parent, $parent.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');">
                                     <i class="material-icons">chat</i>Take A Talk</button>
                             </div>
                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -436,6 +436,10 @@
         </div>
 
         <div class="dChatDialog" ng-show="webTag === 'ChatDialog'">
+            <div ng-show="!isLogin" class="NotLogin">
+                Please login at <strong>Personal Info</strong> Page first
+            </div>
+            
         </div>
     </div>
 

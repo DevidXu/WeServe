@@ -95,19 +95,21 @@ function cCompleteMission(missionId, username, response) {
 
 
 function dGetMessageList(personInfo, response) {
-    messages.find({ $or: [{ user1: personInfo.username }, {user2: personInfo.username}], $orderby: { created_at: -1 } }).then(results => {
+    messages.find({ $or: [{ user1: personInfo.username }, {user2: personInfo.username}] }).sort({ created_at: -1 }).then(results => {
         let friends = {};
         let keys = [];
         for (let message of results ) {
-            let target = message.user1 === personInfo.username? message.user2: message.user1;
             if (message.user1 === personInfo.username) {
                 if (!friends.hasOwnProperty(message.user2)) friends[message.user2] = [];
+                console.log("Begin to push");
                 friends[message.user2].push({friendName: message.user2, message: { sent: message.user1, text: message.text } });
             }
             if (message.user2 === personInfo.username) {
+                console.log("Begin to push");
                 if (!friends.hasOwnProperty(message.user1)) friends[message.user1] = [];
                 friends[message.user1].push({friendName: message.user1, message: { sent: message.user1, text: message.text } });
             }
+            let target = message.user1 === personInfo.username? message.user2: message.user1;
             if (!keys.includes(target)) keys.push(target);
         }
         let sortedFriends = [];
@@ -119,8 +121,11 @@ function dGetMessageList(personInfo, response) {
 }
 
 function dSendMessage(username, targetName, text, response) {
+    console.log("Ready to send message");
     messages.insertMany([{ user1: username, user2: targetName, text: text }]).then(results => {
         response.send("Success");
+        messageFriend(username, "messageUpdate", "true");
+        messageFriend(targetName, "messageUpdate", "true");
     });
 }
 

@@ -100,9 +100,8 @@ function getMessageList(scope) {
 }
 
 function sendMessage(scope, username, targetName, text) {
-    scope.friends = [];
-    scoep.http({
-        method: '/GET',
+    scope.http({
+        method: 'GET',
         url: '/sendMessage',
         params: {
             username: username,
