@@ -102,19 +102,19 @@ function dGetMessageList(personInfo, response) {
             if (message.user1 === personInfo.username) {
                 if (!friends.hasOwnProperty(message.user2)) friends[message.user2] = [];
                 console.log("Begin to push");
-                friends[message.user2].push({friendName: message.user2, message: { sent: message.user1, text: message.text } });
+                friends[message.user2].push({sent: message.user1, text: message.text});
             }
             if (message.user2 === personInfo.username) {
                 console.log("Begin to push");
                 if (!friends.hasOwnProperty(message.user1)) friends[message.user1] = [];
-                friends[message.user1].push({friendName: message.user1, message: { sent: message.user1, text: message.text } });
+                friends[message.user1].push({sent: message.user1, text: message.text});
             }
             let target = message.user1 === personInfo.username? message.user2: message.user1;
             if (!keys.includes(target)) keys.push(target);
         }
         let sortedFriends = [];
         for (let name of keys) {
-            sortedFriends.push(friends[name]);
+            sortedFriends.push({ friendName: name, message: friends[name]});
         }
         response.send(JSON.stringify(sortedFriends));
     });

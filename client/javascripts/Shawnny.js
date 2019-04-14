@@ -5,6 +5,16 @@ function sGetAppName(scope, ...args) {
     return scope.appName;
 }
 
+
+function sInputCheck(scope) {
+    let reward = scope.ngReward;
+    let isNum = isNaN(reward);
+    console.log("input check is called")
+    if(isNum){
+        alert("Please enter a valid number!");
+    }
+}
+
 function sIssue(scope){
     let eventTitle = scope.ngEventTitle;
     let eventDescription = scope.ngEventDescription;
@@ -23,16 +33,16 @@ function sIssue(scope){
     let courier = scope.ngCourier;
     let cleaner = scope.ngCleaner;
     let tags = [];
-    if (driver) tags.push("driver");
-    if (programmer) tags.push("programmer");
-    if (designer) tags.push("designer");
-    if (cook) tags.push("cook");
-    if (plumber) tags.push("plumber");
-    if (tutor) tags.push("tutor");
-    if (math) tags.push("math");
-    if (booster) tags.push("booster");
-    if (courier) tags.push("courier");
-    if (cleaner) tags.push("cleaner");
+    if (driver) tags.push("Driver");
+    if (programmer) tags.push("Programmer");
+    if (designer) tags.push("Designer");
+    if (cook) tags.push("Cook");
+    if (plumber) tags.push("Plumber");
+    if (tutor) tags.push("Tutor");
+    if (math) tags.push("Math");
+    if (booster) tags.push("Booster");
+    if (courier) tags.push("Courier");
+    if (cleaner) tags.push("Cleaner");
 
     scope.http({
         method:'GET',

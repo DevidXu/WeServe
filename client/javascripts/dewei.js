@@ -96,6 +96,8 @@ function getMessageList(scope) {
         }
     }).then((data, status) => {
         scope.friends = data.data;
+        if (scope.friends.length > 0) scope.activeFriend = 0;
+        else scope.activeFriend = 0;
     })
 }
 

@@ -33,11 +33,17 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
             ]
         },
     ];
+    $scope.activeFriend = 0;
+    $scope.updateActiveFriend = updateActiveFriend;
 
     $scope.eventSource = null;
     $scope.getTimeFromNow = getTimeFromNow;
     $scope.sendMessage = sendMessage;
     $scope.getMessageList = getMessageList;
+
+    $scope.toFriendMessage = "";
+    $scope.clickSendMessage = clickSendMessage;
+
 
     // dewei specialized
     $scope.dLogin = dLogin;
@@ -56,6 +62,7 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     // Shawnny specified
     $scope.resendOrNot = false;
     $scope.sIssue = sIssue;
+    $scope.sInputCheck = sInputCheck;
 }]);
 
 /*
@@ -149,7 +156,13 @@ function dLogin(scope) {
 }
 
 
-
+function updateActiveFriend(scope, friendName) {
+    let idx = 0;
+    for (let friend of scope.friends) {
+        if (friend.friendName === friendName) scope.activeFriend = idx;
+        idx += 1;
+    }
+}
 
 function getSubstr(scope, str, begin, num) {
     return str.substr(begin, num);
@@ -204,4 +217,9 @@ function CompleteMission(scope, missionId, username) {
     }).then((data, status) => {
         console.log("Mission is marked as completed");
     })
+}
+
+function clickSendMessage(scope) {
+    sendMessage(scope, scope.personInfo.username, scope.friends[scope.activeFriend].friendName, scope.toFriendMessage);
+    scope.toFriendMessage = '';
 }
