@@ -1,5 +1,5 @@
-const port = 3000;
-// const port = 8081;  // AWS
+// const port = 3000;
+const port = 8081;  // AWS
 
 const express = require('express');
 const app = express();

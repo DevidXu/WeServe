@@ -51,8 +51,11 @@
                             </button>
                         </div>
                     </div>
+                    <br /><br />
+                    <div style="background-color: #989898; opacity: 0.8;"> TestUser1: chen Passw0rd:123 <br /> TestUser2: xu Passw0rd:123</div>
                 </div>
             </div>
+            <br/>
             <div class="dInfoList" ng-show="isLogin">
                 <!--UserInfo Display-->
                 <div class="media">
@@ -467,8 +470,7 @@
                                         <div class="chat_people">
                                             <div class="chat_ib" >
                                                 <h5>{{friend.friendName}}<span class="chat_date">{{getDateString(friend.message[0].time)}}</span></h5>
-                                                <p>Test, which is a new approach to have all solutions
-                                                    astrology under one roof.</p>
+                                                <p>{{friend.message[0].text}}</p>
                                             </div>
                                         </div>
                                     </div>

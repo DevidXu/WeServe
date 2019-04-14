@@ -1,5 +1,5 @@
-const serverURL = "http://localhost:3000";
-// const serverURL = "http://weserve-env.gq2bzpn3rs.us-west-1.elasticbeanstalk.com"; // aws
+// const serverURL = "http://localhost:3000";
+const serverURL = "http://weserve-env.gq2bzpn3rs.us-west-1.elasticbeanstalk.com"; // aws
 
 var app = angular.module('app', []);
 app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
@@ -142,6 +142,9 @@ function dLogin(scope) {
             scope.eventSource = new EventSource(serverURL + '/events/' + scope.personInfo.username, eventSourceInitDict);
             scope.eventSource.onmessage = (message) => {
                 const data = JSON.parse(message.data);
+                if (data.event === "timeCheck") {
+                    dLogin(scope);
+                }
                 if (data.event === "missionTaken" || data.event === "missionCompleted") {
                     dLogin(scope);
                 }
