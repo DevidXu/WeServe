@@ -182,7 +182,7 @@ img{ max-width:100%;}
 .msg_send_btn {
 	background: #05728f none repeat scroll 0 0;
 	border: medium none;
-	border-radius: 75%;
+	border-radius: 10%;
 	color: #fff;
 	cursor: pointer;
 	font-size: 18px;
@@ -192,9 +192,9 @@ img{ max-width:100%;}
 	top: 11px;
 	width: 66px;
 }
-.messaging { padding: 0 0 50px 0;}
+.messaging { padding: 0 0 0 0;}
 .msg_history {
-	height: 516px;
+	height: 81vh;
 	overflow-y: auto;
 }
 

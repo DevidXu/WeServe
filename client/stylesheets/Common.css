@@ -10,7 +10,7 @@
     flex-direction: column;
     overflow-y: auto;
     width: 100%;
-    height: 90%;
+    height: 93%;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -33,7 +33,7 @@
 }
 
 .BottomTag {
-    height: 10%;
+    height: 7%;
 }
 .BottomTag li {
     height: 100%;
@@ -42,11 +42,10 @@
 .BottomTag li a {
     height: 100%;
     text-align: center;
-    padding-top: 16px;
-    font-size: 24px;
+    padding-top: 10px;
+    font-size: 18px;
     font-family: Consolas, monaco, monospace;
     cursor: pointer;
-    border-radius: 0px !important;
     background-color: lightgrey;
 }
 .row {
@@ -173,5 +172,21 @@
 }
 .loginWindow {
     width: 300px;
-    height: 500px;
+    /* height: 500px; */
+    margin: auto;
+    margin-top: 200px;
+    text-align: center;
+    font-weight: bold;
+}
+.usernameInput {
+    margin-top: 25px !important;
+    width: 90%;
+    margin: auto;
+    opacity: 1.0;
+}
+.passwordInput {
+    margin-top: 25px !important;
+    width: 90%;
+    margin: auto;
+    opacity: 1.0;
 }

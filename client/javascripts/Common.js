@@ -11,7 +11,7 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.dGetAppName = dGetAppName;
     $scope.sendSample = sendSample;
 
-    $scope.webTag = 'MissionList';
+    $scope.webTag = 'PersonalInfo';
 
     // dewei added
     $scope.isLogin = false;

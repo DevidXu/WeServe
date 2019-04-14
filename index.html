@@ -34,20 +34,20 @@
         <div class="dPersonalInfo" ng-show="webTag === 'PersonalInfo'" ng-init="dGetPersonalInfo(this, username)">
             <div ng-show="!isLogin">
                 <div class="loginWindow">
-                    <input type="text" class="form-control input-sm" ng-model="username"
+                    <span style="font-size: 30px; color: white">WeServe</span>
+                    <input type="text" class="form-control input-sm usernameInput" ng-model="username"
                            placeholder="Please input your username">
-                    <input type="password" class="form-control input-sm" ng-model="password"
-                           placeholder="Please input your username">
-                    <div class="form-group row">
+                    <input type="password" class="form-control input-sm passwordInput" ng-model="password"
+                           placeholder="Please input your password">
+                    <div class="form-group row" style="margin-top: 30px">
                         <div class="col-sm-6">
                             <button type="button" class="btn btn-primary"
-                                    style="float: right; margin-right: 20px; width: 200px;" ng-click="dLogin(this)">Sign
-                                In
+                                    style="width: 100px; margin-left: 20px; " ng-click="dLogin(this)">Sign In
                             </button>
                         </div>
                         <div class="col-sm-6">
                             <button type="button" class="btn btn-primary"
-                                    style="float: left; margin-left: 20px; width: 200px;">Sign Up
+                                    style="width: 100px; margin-right: 20px;">Sign Up
                             </button>
                         </div>
                     </div>
@@ -71,6 +71,9 @@
                         <div class=" row">
                             <h5>Personal Tags: &nbsp;</h5>
                             <span  ng-repeat="tag in personInfo.tags" class="badge badge-primary tagInterval">{{tag}}</span>
+                        </div>
+                        <div>
+                            <button id="logOutButton" type="submit" class="btn btn-primary col-sm-2" ng-click="isLogin=false; username=''; password='';">Log Out</button>
                         </div>
                     </div>
                 </div>
@@ -118,7 +121,7 @@
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
                                                 <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
-                                                    <i class="material-icons">chat</i>Take A Talk</button>
+                                                    <i class="material-icons">chat</i>Let's Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                                 <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -131,7 +134,7 @@
                                                    ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0"
                                                    ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">
                                                     <i class="material-icons">list</i>
-                                                    Take Mission</a>
+                                                    Accept Request</a>
                                                 <p>&nbsp;</p>
                                                 <a href="#" class="btn btn-primary MissionAccept"
                                                    ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1"
@@ -196,7 +199,7 @@
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
                                                 <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
-                                                    <i class="material-icons">chat</i>Take A Talk</button>
+                                                    <i class="material-icons">chat</i>Let's Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                                 <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -209,7 +212,7 @@
                                                    ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0"
                                                    ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">
                                                     <i class="material-icons">list</i>
-                                                    Take Mission</a>
+                                                    Accept Request</a>
                                                 <p>&nbsp;</p>
                                                 <a href="#" class="btn btn-primary MissionAccept"
                                                    ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1"
@@ -274,7 +277,7 @@
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
                                                 <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
-                                                    <i class="material-icons">chat</i>Take A Talk</button>
+                                                    <i class="material-icons">chat</i>Let's Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                                 <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -287,7 +290,7 @@
                                                    ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0"
                                                    ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">
                                                     <i class="material-icons">list</i>
-                                                    Take Mission</a>
+                                                    Accept Request</a>
                                                 <p>&nbsp;</p>
                                                 <a href="#" class="btn btn-primary MissionAccept"
                                                    ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1"
@@ -408,7 +411,7 @@
                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
                                 <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
-                                    <i class="material-icons">chat</i>Take A Talk</button>
+                                    <i class="material-icons">chat</i>Let's Talk</button>
                             </div>
                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
                                 <div ng-show="mission.doneBy!==''" style="font-size: 13px;">
@@ -421,7 +424,7 @@
                                    ng-show="mission.issuer !== $parent.personInfo.username && mission.status == 0"
                                    ng-click="TakeMission($parent, mission._id, $parent.personInfo.username)">
                                     <i class="material-icons">list</i>
-                                    Take Mission</a>
+                                    Accept Request</a>
                                 <p>&nbsp;</p>
                                 <a href="#" class="btn btn-primary MissionAccept"
                                    ng-show="mission.doneBy === $parent.personInfo.username && mission.status == 1"
@@ -514,22 +517,31 @@
 
     <ul class="nav nav-pills BottomTag">
         <li class="nav-item">
-            <a class="nav-link nav-style" ng-class="{active: webTag === 'MissionList' }"
-               ng-click="webTag='MissionList'">Mission List</a>
+            <a class="nav-link nav-style round" ng-class="{active: webTag === 'MissionList' }"
+               ng-click="webTag='MissionList'">
+                <i class="material-icons">format_list_bulleted</i> Mission List</a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-style" ng-class="{active: webTag === 'ChatDialog' }"
-               ng-click="webTag='ChatDialog'">Chat Dialog</a>
+               ng-click="webTag='ChatDialog'">
+                <i class="material-icons">chat_bubble_outline</i>
+                Chat
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-style" ng-class="{active: webTag === 'IssueMission' }"
-               ng-click="webTag='IssueMission'">Issue Mission</a>
+               ng-click="webTag='IssueMission'"><i class="material-icons">publish</i>
+                Issue Mission
+            </a>
         </li>
         <li class="nav-item">
             <a class="nav-link nav-style" ng-class="{active: webTag === 'PersonalInfo' }"
-               ng-click="webTag='PersonalInfo'; deweiTest(this);">Personal Info</a>
+               ng-click="webTag='PersonalInfo'; deweiTest(this);"><i class="material-icons">
+                person
+            </i>Personal Info</a>
         </li>
     </ul>
+
 </div>
 </body>
 </html>
