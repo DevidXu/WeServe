@@ -121,8 +121,15 @@ function dGetMessageList(personInfo, response) {
 }
 
 function dSendMessage(username, targetName, text, response) {
-    console.log("Ready to send message");
-    messages.insertMany([{ user1: username, user2: targetName, text: text }]).then(results => {
+    console.log(username);
+    console.log(targetName);
+    console.log(text);
+    let message = new messages();
+    message.user1 = username;
+    message.user2 = targetName;
+    message.text = text;
+    message.save().then(results => {
+        console.log(results);
         response.send("Success");
         messageFriend(username, "messageUpdate", "true");
         messageFriend(targetName, "messageUpdate", "true");

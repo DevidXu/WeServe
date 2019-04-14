@@ -46,7 +46,6 @@ app.get('/issueMission', (req, res) => {
         location: location,
         doneBy: doneBy
     };
-    console.log(mission);
     DB.sIssueMission(mission, res);
 })
 
@@ -71,7 +70,6 @@ app.get('/getMessageList', (req, res) => {
 });
 
 app.get('/sendMessage', (req, res) => {
-    console.log("Here is send message");
     const { username, targetName, text } = req.query;
     DB.dSendMessage(username, targetName, text, res);
 });
@@ -88,7 +86,6 @@ app.get('/events/:id', (req, eventRes) => {
     let sourceURL = "/events/" + username;
     console.log("Event user is coming in with event source: " + sourceURL);
     DB.userData[sourceURL] = eventRes;
-    console.log(`Event source for ${username}: ${sourceURL}`);
 
     const checkItv = setInterval(function() {
         const timeCheck = { event: "timeCheck", data: new Date().toLocaleTimeString('en-US') };

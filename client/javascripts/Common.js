@@ -138,13 +138,12 @@ function dLogin(scope) {
             var eventSourceInitDict = {headers: {'Content-Type': 'application/json'}};
             scope.eventSource = new EventSource(serverURL + '/events/' + scope.personInfo.username, eventSourceInitDict);
             scope.eventSource.onmessage = (message) => {
-                console.log(message);
                 const data = JSON.parse(message.data);
                 if (data.event === "missionTaken" || data.event === "missionCompleted") {
                     dLogin(scope);
                 }
                 if (data.event === "messageUpdate") {
-                    getMissageList(scope);
+                    getMessageList(scope);
                 }
             }
             getMessageList(scope);
@@ -169,7 +168,6 @@ function getSubstr(scope, str, begin, num) {
 }
 
 function getTimeFromNow(scope, timeStr) {
-    console.log(timeStr);
     let now = new Date();
     let issueDate = new Date(timeStr);
     if (now - issueDate < 60000) {
