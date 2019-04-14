@@ -1,3 +1,6 @@
+const serverURL = "http://localhost:3000";
+// const serverURL = "http://weserve-env.gq2bzpn3rs.us-west-1.elasticbeanstalk.com"; // aws
+
 var app = angular.module('app', []);
 app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.http = $http;
@@ -58,6 +61,7 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
     $scope.showMissionIssued = showMissionIssued;
     $scope.TakeMission = TakeMission;
     $scope.CompleteMission = CompleteMission;
+    $scope.clickTakeTalk = clickTakeTalk;
 
     // Shawnny specified
     $scope.resendOrNot = false;
@@ -117,8 +121,6 @@ function updatePersonInfo(scope) {
     getMissionOngoingInfo(scope, scope.personInfo.missionOngoing);
     getNewMissionList(scope);
 }
-
-const serverURL = "http://localhost:3000";
 
 function dLogin(scope) {
     let username = scope.username;
@@ -220,4 +222,9 @@ function CompleteMission(scope, missionId, username) {
 function clickSendMessage(scope) {
     sendMessage(scope, scope.personInfo.username, scope.friends[scope.activeFriend].friendName, scope.toFriendMessage);
     scope.toFriendMessage = '';
+}
+
+function clickTakeTalk(scope, mission) {
+    scope.webTag = 'ChatDialog';
+    scope.sendMessage(scope, scope.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');
 }

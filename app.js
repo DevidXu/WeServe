@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+// const port = 8081;  // AWS
 
 const http = require('http');
 const https = require('https');

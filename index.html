@@ -121,7 +121,7 @@
 
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
                                                     <i class="material-icons">chat</i>Take A Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -199,7 +199,7 @@
 
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
                                                     <i class="material-icons">chat</i>Take A Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -277,7 +277,7 @@
 
                                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;">
+                                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
                                                     <i class="material-icons">chat</i>Take A Talk</button>
                                             </div>
                                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -342,7 +342,7 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2" id="srewardLabel" for="sreward">Reward:</label>
-                    <input type="text" class="form-control col-md-8" id="sreward" placeholder="Reward amount" ng-model="ngReward" ng-mouseout="sInputCheck(this)">
+                    <input type="text" class="form-control col-md-8" id="sreward" placeholder="Reward amount" ng-model="ngReward" ng-change="sInputCheck(this)">
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2" id="slevelLabel" for="slevel">Level Requirement:</label>
@@ -408,7 +408,7 @@
 
                             <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
-                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="sendMessage($parent, $parent.personInfo.username, mission.issuer, 'Hello '+mission.issuer+', let us take a talk!');">
+                                <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
                                     <i class="material-icons">chat</i>Take A Talk</button>
                             </div>
                             <div ng-show="mission.issuer === $parent.personInfo.username && mission.status == 1">
@@ -448,7 +448,7 @@
             <div ng-show="!isLogin" class="NotLogin">
                 Please login at <strong>Personal Info</strong> Page first
             </div>
-            <div class="row" style="width: 100%; height: 100%;">
+            <div class="row" style="width: 100%; height: 100%;" ng-show="isLogin">
                 <div class="col-md-3">
                     <div style="height: 100%; width: 20%; display: inline-block;">
                         <div ng-repeat="friend in friends" ng-click="updateActiveFriend($parent, friend.friendName)">
