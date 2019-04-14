@@ -143,7 +143,7 @@ function dLogin(scope) {
             scope.eventSource.onmessage = (message) => {
                 const data = JSON.parse(message.data);
                 if (data.event === "timeCheck") {
-                    dLogin(scope);
+                    getNewMissionList(scope);
                 }
                 if (data.event === "missionTaken" || data.event === "missionCompleted") {
                     dLogin(scope);
