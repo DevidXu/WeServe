@@ -7,7 +7,13 @@
 .dPersonalInfo {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
+    background-image: url('../resources/login_background.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    width: 100%;
+    height: 100%;
 }
 .dBorderRow {
     border: 1px solid black;

@@ -32,6 +32,8 @@ function sIssue(scope){
     let booster = scope.ngBooster;
     let courier = scope.ngCourier;
     let cleaner = scope.ngCleaner;
+    let student = scope.ngStudent;
+
     let tags = [];
     if (driver) tags.push("Driver");
     if (programmer) tags.push("Programmer");
@@ -43,6 +45,7 @@ function sIssue(scope){
     if (booster) tags.push("Booster");
     if (courier) tags.push("Courier");
     if (cleaner) tags.push("Cleaner");
+    if (student) tags.push("Student");
 
     scope.http({
         method:'GET',
