@@ -171,3 +171,7 @@
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
+.loginWindow {
+    width: 300px;
+    height: 500px;
+}

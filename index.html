@@ -33,27 +33,23 @@
 
         <div class="dPersonalInfo" ng-show="webTag === 'PersonalInfo'" ng-init="dGetPersonalInfo(this, username)">
             <div ng-show="!isLogin">
-                <div class="form-group row" style="height: 100px;"></div>
-                <div class="form-group row" style="margin-top: 120px; margin-bottom: 30px;">
-                    <label class="col-sm-2 offset-sm-3">Username</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" ng-model="username"
-                               placeholder="Please input your username">
-                    </div>
-                </div>
-                <div class="form-group row" style="margin-top: 30px; margin-bottom: 50px;">
-                    <label class="col-sm-2 offset-sm-3">Password</label>
-                    <div class="col-sm-4">
-                        <input type="password" class="form-control input-sm" ng-model="password"
-                               placeholder="Please input your username">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <button type="button" class="btn btn-primary" style="float: right; margin-right: 20px; width: 200px;" ng-click="dLogin(this)">Sign In</button>
-                    </div>
-                    <div class="col-sm-6">
-                        <button type="button" class="btn btn-primary" style="float: left; margin-left: 20px; width: 200px;">Sign Up</button>
+                <div class="loginWindow">
+                    <input type="text" class="form-control input-sm" ng-model="username"
+                           placeholder="Please input your username">
+                    <input type="password" class="form-control input-sm" ng-model="password"
+                           placeholder="Please input your username">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-primary"
+                                    style="float: right; margin-right: 20px; width: 200px;" ng-click="dLogin(this)">Sign
+                                In
+                            </button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-primary"
+                                    style="float: left; margin-left: 20px; width: 200px;">Sign Up
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -275,7 +271,7 @@
                                                 <!--</div>-->
                                             </div>
 
-                                            <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status == 1) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
+                                            <div class="MissionIssueBy row justify-content-between" ng-show="(mission.doneBy === $parent.personInfo.username && mission.status != 0) || (mission.issuer != $parent.personInfo.username && mission.status == 0)">
                                                 <p>Issued By: <strong>{{ mission.issuer }}</strong></p>
                                                 <button class="btn btn-primary MissionTalk " style=" margin-top: -5px; font-size: 13px;" ng-click="clickTakeTalk($parent, mission);">
                                                     <i class="material-icons">chat</i>Take A Talk</button>
@@ -332,6 +328,29 @@
                     <label class="col-md-2" id = "stitleLabel" for="stitleName">Title Name:</label>
                     <input class="col-md-8" type="text" class="form-control" id="stitleName" placeholder="Enter a title name for this event" ng-model="ngEventTitle">
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2" id = "stagLabel" for="stitleName">Choose a tag:</label>
+                    <div class="dropdown col-md-4" id="schooseTags">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Choose a Tag
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <label class="dropdown-item" for="sDriverTag"><input id="sDriverTag" type="checkbox" ng-model="ngDriver">Driver</label>
+                            <label class="dropdown-item" for="sProgrammerTag"><input id="sProgrammerTag" type="checkbox" ng-model="ngProgrammer">Programmer</label>
+                            <label class="dropdown-item" for="sDesignerTag"><input id="sDesignerTag" type="checkbox" ng-model="ngDesigner">Designer</label>
+                            <label class="dropdown-item" for="sCookTag"><input id="sCookTag" type="checkbox" ng-model="ngCook">Cook</label>
+                            <label class="dropdown-item" for="sPlumberTag"><input id="sPlumberTag" type="checkbox" ng-model="ngPlumber">Plumber</label>
+                            <label class="dropdown-item" for="sTutorTag"><input id="sTutorTag" type="checkbox" ng-model="ngTutor">Tutor</label>
+                            <label class="dropdown-item" for="sMathTag"><input id="sMathTag" type="checkbox" ng-model="ngMath">Math</label>
+                            <label class="dropdown-item" for="sBoosterTag"><input id="sBoosterTag" type="checkbox" ng-model="ngBooster">Booster</label>
+                            <label class="dropdown-item" for="sCourierTag"><input id="sCourierTag" type="checkbox" ng-model="ngCourier">Courier</label>
+                            <label class="dropdown-item" for="sCleanerTag"><input id="sCleanerTag" type="checkbox" ng-model="ngCleaner">Cleaner</label>
+                            <label class="dropdown-item" for="sStudent"><input id="sStudentTag" type="checkbox" ng-model="ngStudent">Student</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group form-group-lg row">
                     <label class="col-md-2" id="sdescriptionLabel" for="stitleDescription">Description:</label>
                     <textarea class="form-control form-control-lg col-md-8" type="text" rows="8" id="stitleDescription" placeholder="Explain your needs in detail" ng-model="ngEventDescription"></textarea>
@@ -345,32 +364,12 @@
                     <input type="text" class="form-control col-md-8" id="sreward" placeholder="Reward amount" ng-model="ngReward" ng-change="sInputCheck(this)">
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-2" id="slevelLabel" for="slevel">Level Requirement:</label>
+                    <label class="col-md-2" id="slevelLabel" for="slevel">Level Needed:</label>
                     <input type="text" class="form-control col-md-8" id="slevel" placeholder="Your minimum level requirement" ng-model="ngLevel">
                 </div>
 
                 <div class="form-group row">
-                    <div class="dropdown col-md-4" id="schooseTags">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Choose Your Tag
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <label class="dropdown-item" for="sDriverTag"><input id="sDriverTag" type="checkbox" ng-model="ngDriver">Driver</label>
-                            <label class="dropdown-item" for="sProgrammerTag"><input id="sProgrammerTag" type="checkbox" ng-model="ngProgrammer">Programmer</label>
-                            <label class="dropdown-item" for="sDesignerTag"><input id="sDesignerTag" type="checkbox" ng-model="ngDesigner">Designer</label>
-                            <label class="dropdown-item" for="sCookTag"><input id="sCookTag" type="checkbox" ng-model="ngCook">Cook</label>
-                            <label class="dropdown-item" for="sPlumberTag"><input id="sPlumberTag" type="checkbox" ng-model="ngPlumber">Plumber</label>
-                            <label class="dropdown-item" for="sTutorTag"><input id="sTutorTag" type="checkbox" ng-model="ngTutor">Tutor</label>
-                            <label class="dropdown-item" for="sMathTag"><input id="sMathTag" type="checkbox" ng-model="ngMath">Math</label>
-                            <label class="dropdown-item" for="sBoosterTag"><input id="sBoosterTag" type="checkbox" ng-model="ngBooster">Booster</label>
-                            <label class="dropdown-item" for="sCourierTag"><input id="sCourierTag" type="checkbox" ng-model="ngCourier">Courier</label>
-                            <label class="dropdown-item" for="sCleanerTag"><input id="sCleanerTag" type="checkbox" ng-model="ngCleaner">Cleaner</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <button id="sIssueButton" type="submit" class="btn btn-primary col-md-2" ng-click="sIssue(this)">Issue!</button>
+                    <button id="sIssueButton" type="submit" class="btn btn-primary col-md-4" ng-click="sIssue(this)">Issue the Task!</button>
                 </div>
             </form>
         </div>
