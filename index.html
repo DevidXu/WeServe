@@ -447,24 +447,67 @@
             <div ng-show="!isLogin" class="NotLogin">
                 Please login at <strong>Personal Info</strong> Page first
             </div>
-            <div class="row" style="width: 100%; height: 100%;" ng-show="isLogin">
-                <div class="col-md-3">
-                    <div style="height: 100%; width: 20%; display: inline-block;">
-                        <div ng-repeat="friend in friends" ng-click="updateActiveFriend($parent, friend.friendName)">
-                            {{friend.friendName}}
+            <div class="messaging" ng-show="isLogin">
+                <div class="inbox_msg">
+                    <div class="inbox_people">
+                        <div class="headind_srch">
+                            <div class="recent_heading">
+                                <h4>Recent</h4>
+                            </div>
                         </div>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"
+                                   ng-click="updateActiveFriend($parent, friend.friendName)"
+                                   ng-repeat="friend in friends;">
+                                    <div class="chat_list" ng-class="{active_chat: $index == activeFriend}">
+                                        <div class="chat_people">
+                                            <div class="chat_ib" >
+                                                <h5>{{friend.friendName}}<span class="chat_date">Dec 25</span></h5>
+                                                <p>Test, which is a new approach to have all solutions
+                                                    astrology under one roof.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <div style="height: 100%; width: 80%; display: inline-block;">
-                        <div ng-repeat="message in friends[activeFriend].message">
-                            <div>{{message.sent}}: {{message.text}}</div>
+                    <div class="mesgs">
+                        <div class="msg_history" style="display: flex; flex-direction: column-reverse;">
+                            <div ng-repeat="message in friends[activeFriend].message">
+                                <div class="incoming_msg" ng-show="friends[activeFriend].friendName === message.sent">
+                                    <div class="received_msg">
+                                        <span class="time_date">{{message.sent}}</span>
+                                        <div class="received_withd_msg">
+                                            <p >{{message.text}}</p>
+                                            <span class="time_date"> 11:01 AM    |    June 9</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="outgoing_msg" ng-show="friends[activeFriend].friendName !== message.sent">
+                                    <div class="sent_msg">
+                                        <span class="time_date">{{message.sent}}</span>
+                                        <p>{{message.text}}</p>
+                                        <span class="time_date"> 11:01 AM    |    June 9</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="type_msg">
+                            <!--<button class="btn btn-primary" ng-click="clickSendMessage(this)">SEND</button>-->
+                            <div class="input_msg_write">
+                                <input type="text" class="write_msg" placeholder="Type a message" ng-model="toFriendMessage" />
+                                <button ng-click="clickSendMessage(this)" class="msg_send_btn" type="button">Send<i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+
                     </div>
-                    <input type="text" ng-model="toFriendMessage" />
-                    <button class="btn btn-primary" ng-click="clickSendMessage(this)">SEND</button>
                 </div>
             </div>
+
+
         </div>
 
     </div>
