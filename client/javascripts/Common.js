@@ -46,6 +46,7 @@ app.controller("userCtrl", ["$scope", "$http", function ($scope, $http) {
 
     $scope.toFriendMessage = "";
     $scope.clickSendMessage = clickSendMessage;
+    $scope.getDateString = getDateString;
 
 
     // dewei specialized
@@ -167,6 +168,10 @@ function updateActiveFriend(scope, friendName) {
 
 function getSubstr(scope, str, begin, num) {
     return str.substr(begin, num);
+}
+
+function getDateString(str) {
+    return new Date(str).toLocaleString();
 }
 
 function getTimeFromNow(scope, timeStr) {
